@@ -1,5 +1,11 @@
-<<<<<<< HEAD
+
 # Hopper Homework Assignment - Methods and Assumptions
+
+## Prompt
+
+Use the attached data to create summary pricing stats for departure 
+and return dates, and then create a working prototype of a basic calendar that displays the 
+cheapest departure dates and updates to reflect the cheapest return dates. 
 
 ## Process and Timeline
 
@@ -70,10 +76,5 @@ Thankfully I had a template from another web-app project that designed for both 
 
 #### Booking Flights
 
-I added a popup box to display the price of the flight. Ideally, this would have other features included in Hopper such as the selling airline, the # of stops, checked bags cost, and the prediction of future flight price. However, I chose not to include any of this as the data was eitehr unavailable or I thought it would add too much complexity given time constraints. 
+I added a popup box to display the price of the flight. Ideally, this would have other features included in Hopper such as the selling airline, the # of stops, checked bags cost, and the prediction of future flight price. However, I chose not to include any of this as the data was either unavailable or I thought it would add too much complexity given time constraints. 
 
-
-
-=======
-Homework assignment for Hopper.
->>>>>>> a392c4655a9de9c371ab01c50164b94af6e35a43
