@@ -11,7 +11,8 @@ if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/'):
 else:
     PORT = 8000
 
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_pyfile('config.py')
 app.config.update(
     SEND_FILE_MAX_AGE_DEFAULT=3600
 )
@@ -24,18 +25,22 @@ all_dates = []
 
 
 ### Connection specs for CloudSQL database
-host = '35.202.134.73'
-pw = "hopper_pw"
-port = 3306
-user = 'root'
-name = 'hopper'
-CLOUDSQL_PROJECT = "hopper-182321"
-CLOUDSQL_INSTANCE = "us-central1:hopper-sql"
+
 
 ### Function to create SQL connection
 def sql_connect():
-    conn = MySQLdb.connect(unix_socket='/cloudsql/{}:{}'.format(CLOUDSQL_PROJECT, CLOUDSQL_INSTANCE), user=user,
-                           host=host, passwd=pw, db=name)
+
+
+    cloud_dbpass = app.config['DBPASS']
+    cloud_dbhost = app.config['DBHOST']
+    cloud_dbuser = app.config['DBUSER']
+    cloud_dbname = app.config['DBNAME']
+    CLOUDSQL_PROJECT = app.config['CLOUDSQL_PROJECT']
+    CLOUDSQL_INSTANCE = app.config['CLOUDSQL_INSTANCE']
+
+
+    conn = MySQLdb.connect(unix_socket='/cloudsql/{}:{}'.format(CLOUDSQL_PROJECT, CLOUDSQL_INSTANCE), user=cloud_dbuser,
+                               host=cloud_dbhost, passwd=cloud_dbpass, db=cloud_dbname)
     return conn
 
 
