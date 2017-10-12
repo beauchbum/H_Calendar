@@ -61,8 +61,15 @@ When determining departure/return prices, the application filters out any inform
 
 I did not take into consideration the received_ms even though in production this would be a constraint. 
 
+## Issues
+
+#### Mobile
+
+Thankfully I had a template from another web-app project that designed for both desktop and mobile. However, there is something that cuts off Sept 2017 - I think it has to do with the "-webkit-overflow-scrolling: touch;" style, but I could not figure it out. 
+
 #### Booking Flights
 
 I added a popup box to display the price of the flight. Ideally, this would have other features included in Hopper such as the selling airline, the # of stops, checked bags cost, and the prediction of future flight price. However, I chose not to include any of this as the data was eitehr unavailable or I thought it would add too much complexity given time constraints. 
+
 
 
