@@ -1,11 +1,7 @@
 @import url("font-awesome.min.css");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,300italic,400italic");
 
-/*
-	Alpha by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+
 	white-space:nowrap;
 
 /* Reset */
@@ -99,62 +95,10 @@
 	    margin: 0 auto;
 	}
 
-	.list-group {
-		overflow-y: scroll; 
-		max-height: 62vh;
-	}
 
-	.list_group_bullet {
-		border:none; 
-		display:block; 
-		margin:0 auto; 
-		height:35%; 
-		width:35%;
-	}
 
-	.list_group_name {
-		font-size: 1.5em; 
-		padding-left:10px; 
-		vertical-align: top;
-		color: black;
-	}
 
-	.list_group_info{
-		font-size: 1.0em; 
-		padding-left:15px; 
-		vertical-align: bottom;
-		color: black;
-	}
 
-	.prof_pic{
-		vertical-align: middle; 
-		height:100%; 
-		width:100%;
-	}
-
-	.modal_prof_pic{
-		vertical-align: middle;
-	}
-
-	.listening{
-		background-color: #79C3F7;
-	}
-
-	a.listening:hover{
-		background-color: #79C3F7;
-	}
-
-	.following{
-		background-color: #ffffff;
-	}
-
-	.anon_checkbox{
-		font-size: 1.2em;
-	}
-
-	.tune{
-		font-size:1.0em;
-	}
 
 	.weekdays {
 		font-weight: bold;
@@ -2394,79 +2338,7 @@ box-shadow: none;
 
 
 
-	/*
 
-	input[type="checkbox"],
-	input[type="radio"] {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
-		display: block;
-		float: left;
-		margin-right: -2em;
-		opacity: 0;
-		width: 1em;
-		z-index: -1;
-	}
-
-		input[type="checkbox"] + label,
-		input[type="radio"] + label {
-			text-decoration: none;
-			color: #777;
-			cursor: pointer;
-			display: inline-block;
-			font-size: 1em;
-			font-weight: 300;
-			padding-left: 2.55em;
-			padding-right: 0.75em;
-			position: relative;
-		}
-
-			input[type="checkbox"] + label:before,
-			input[type="radio"] + label:before {
-				-moz-osx-font-smoothing: grayscale;
-				-webkit-font-smoothing: antialiased;
-				font-family: FontAwesome;
-				font-style: normal;
-				font-weight: normal;
-				text-transform: none !important;
-			}
-
-			input[type="checkbox"] + label:before,
-			input[type="radio"] + label:before {
-				background: #f8f8f8;
-				border-radius: 6px;
-				border: solid 1px #e5e5e5;
-				content: '';
-				display: inline-block;
-				height: 1.8em;
-				left: 0;
-				line-height: 1.725em;
-				position: absolute;
-				text-align: center;
-				top: 0;
-				width: 1.8em;
-			}
-
-		input[type="checkbox"]:checked + label:before,
-		input[type="radio"]:checked + label:before {
-			background: #666;
-			border-color: #666;
-			color: #ffffff;
-			content: '\f00c';
-		}
-
-		input[type="checkbox"]:focus + label:before,
-		input[type="radio"]:focus + label:before {
-			border-color: #e89980;
-			box-shadow: 0 0 0 1px #e89980;
-		}
-
-	input[type="checkbox"] + label:before {
-		border-radius: 6px;
-	}
-	*/
 
 
 
