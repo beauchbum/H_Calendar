@@ -30,7 +30,7 @@ port = 3306
 user = 'root'
 name = 'hopper'
 CLOUDSQL_PROJECT = "hopper-182321"
-CLOUDSQL_INSTANCE = "hopper-182321:us-central1:hopper-sql"
+CLOUDSQL_INSTANCE = "us-central1:hopper-sql"
 
 ### Function to create SQL connection
 def sql_connect():
@@ -181,4 +181,4 @@ def selectReturn():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=PORT)
+    app.run(debug=True, port=8000)
