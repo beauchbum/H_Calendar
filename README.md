@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Hopper Homework Assignment - Methods and Assumptions
 
 ## Process and Timeline
@@ -73,3 +74,6 @@ I added a popup box to display the price of the flight. Ideally, this would have
 
 
 
+=======
+Homework assignment for Hopper.
+>>>>>>> a392c4655a9de9c371ab01c50164b94af6e35a43
