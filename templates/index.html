@@ -54,13 +54,13 @@
 				    success: function (data){
 
 					  	for (i=0; i < data.return_dates.length; i++){
-					  		if(data.return_dates[i][1] > intervals[0] && data.return_dates[i][1] < intervals[1]){
+					  		if(data.return_dates[i][1] >= intervals[0] && data.return_dates[i][1] < intervals[1]){
 					  			$("button[name=" + data.return_dates[i][0] + "]").attr('class', 'btn btn-success btn-lg day_button');
 					  		}
-					  		else if(data.return_dates[i][1] > intervals[1] && data.return_dates[i][1] < intervals[2]){
+					  		else if(data.return_dates[i][1] >= intervals[1] && data.return_dates[i][1] < intervals[2]){
 								$("button[name=" + data.return_dates[i][0] + "]").attr('class', 'btn btn-warning btn-lg day_button');
 					  		}
-					  		else if(data.return_dates[i][1] > intervals[2] && data.return_dates[i][1] < intervals[3]){
+					  		else if(data.return_dates[i][1] >= intervals[2] && data.return_dates[i][1] < intervals[3]){
 					  			$("button[name=" + data.return_dates[i][0] + "]").attr('class', 'btn btn-orange btn-lg day_button');
 					  		}
 					  		else{
@@ -100,10 +100,10 @@
 
 		function bookFlights(){
 			$('#myModal').modal('show');
-			if(rt_price > intervals[0] && rt_price < intervals[1]){
+			if(rt_price >= intervals[0] && rt_price < intervals[1]){
 				$('h4[name=modal_price]').css('color','green');
 			}
-			else if(rt_price > intervals[1] && rt_price < intervals[3]){
+			else if(rt_price >= intervals[1] && rt_price < intervals[3]){
 				$('h4[name=modal_price]').css('color','#ff8c00');
 			}
 			else{
@@ -246,11 +246,11 @@
 						    		{% if d[2] == "" %}
 						    			<button value = "disabled_day_button btn btn-default btn-lg disabled" name="{{ d[0] }}" type="button" class="disabled_day_button btn btn-default btn-lg disabled">{{ d[1] }}</button>
 						    		{% else %}
-						    			{% if d[2] > intervals[0] and d[2] < intervals[1] %}
+						    			{% if d[2] >= intervals[0] and d[2] < intervals[1] %}
 						    				<button value = "btn btn-success btn-lg day_button" name="{{ d[0] }}" type="button" class="btn btn-success btn-lg day_button" onclick="selectDeparture(this.name)">{{ d[1] }}</button>
-						    			{% elif d[2] > intervals[1] and d[2] < intervals[2] %}
+						    			{% elif d[2] >= intervals[1] and d[2] < intervals[2] %}
 						    				<button value = "btn btn-warning btn-lg day_button" name="{{ d[0] }}" type="button" class="btn btn-warning btn-lg day_button" onclick="selectDeparture(this.name)">{{ d[1] }}</button>
-						    			{% elif d[2] > intervals[2] and d[2] < intervals[3] %}
+						    			{% elif d[2] >= intervals[2] and d[2] < intervals[3] %}
 						    				<button value = "btn btn-orange btn-lg day_button" name="{{ d[0] }}" type="button" class="btn btn-orange btn-lg day_button" onclick="selectDeparture(this.name)">{{ d[1] }}</button>
 						    			{% else %}
 						    				<button value = "btn btn-red btn-lg day_button" name="{{ d[0] }}" type="button" class="btn btn-red btn-lg day_button"  onclick="selectDeparture(this.name)">{{ d[1] }}</button>
