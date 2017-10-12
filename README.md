@@ -41,6 +41,8 @@ Scrapped the static .csv files and instead uploaded a modified version of the or
 
 Created the intervals by subtracting the minimum price from the 75th percentile price and then dividing by four. There was no mathematical basis for this, but it was the result of some tinkering to arrive at intervals that I believed were in line with Hopper's design.
 
+Intervals do not update after selecting departure date. This may have been useful for greated granularity in comparing return dates, but I also thought it would add confusion. 
+
 #### CSV vs SQL
 
 Quickly found out that the file was too big to be loaded each time the prototype was started. For that reason I gravitated towards creating compacted CSV files and presenting it as "This is a static calender as if it is Oct. 8, 2016". However, I had some extra time on Thursday to upload to SQL and realized I could make the calendar dynamic by doing Group Bys in the query rather than in Python. 
