@@ -151,6 +151,8 @@ def index():
     step = round((np.percentile(departure_prices,75) - min)/4,-1)
     intervals = [int(x*step+rounded_min) for x in range(4)]
 
+    cursor.close(); conn.close()
+
     return render_template("index.html", calendar=calendar_data, intervals = intervals)
 
 

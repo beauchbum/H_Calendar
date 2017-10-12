@@ -41,7 +41,7 @@ Scrapped the static .csv files and instead uploaded a modified version of the or
 
 Created the intervals by subtracting the minimum price from the 75th percentile price and then dividing by four. There was no mathematical basis for this, but it was the result of some tinkering to arrive at intervals that I believed were in line with Hopper's design.
 
-Intervals do not update after selecting departure date. This may have been useful for greated granularity in comparing return dates, but I also thought it would add confusion. 
+Note - Intervals do not update after selecting departure date. This may have been useful for more granularity in comparing return dates, but I also thought it would add confusion. 
 
 #### CSV vs SQL
 
@@ -60,5 +60,9 @@ As mentioned above, I found the 2016-2017 data to have much more information and
 When determining departure/return prices, the application filters out any information with a received_date in the future. For example if it is Oct. 12, the app will not consider any rows with received_date of Oct. 13 or more. 
 
 I did not take into consideration the received_ms even though in production this would be a constraint. 
+
+#### Booking Flights
+
+I added a popup box to display the price of the flight. Ideally, this would have other features included in Hopper such as the selling airline, the # of stops, checked bags cost, and the prediction of future flight price. However, I chose not to include any of this as the data was eitehr unavailable or I thought it would add too much complexity given time constraints. 
 
 
