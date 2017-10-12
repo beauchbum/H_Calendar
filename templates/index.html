@@ -1,0 +1,301 @@
+{% block body %}
+
+<!DOCTYPE HTML>
+
+
+
+<html>
+	<head>
+		<title>Hopper - Prototype</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/manifest.json">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="theme-color" content="#ffffff">		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="/static/css/main.css" />
+		<script src="/static/js/jquery.dropotron.min.js"></script>
+		<script src="/static/js/jquery.scrollgress.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+		<script src="/static/js/skel.min.js"></script>
+		<script src="/static/js/util.js"></script>
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<script src="/static/js/main.js"></script>
+
+
+
+
+
+		
+	</head>
+	<script>
+
+		$(document).ready(function() {
+		    $('[data-toggle="tooltip"]').tooltip();
+		});
+
+		var intervals = {{ intervals }};
+		var rt_price = 0;
+
+		function selectDeparture(name)
+			{
+				$( ".day_button" ).attr('onclick',"").attr('class',"disabled_day_button btn btn-default btn-lg disabled"); 
+				$("h2[name=departure_header]").html("<img src='/static/images/x-mark' style='height:.7em;padding-right:.3em' onclick='clearCalendar()'>" + name + "");
+				$.ajax({
+				    type : 'GET',
+				    url : "/selectDeparture?date="+name,
+				    contentType: 'application/json;charset=UTF-8',
+				    success: function (data){
+
+					  	for (i=0; i < data.return_dates.length; i++){
+					  		if(data.return_dates[i][1] > intervals[0] && data.return_dates[i][1] < intervals[1]){
+					  			$("button[name=" + data.return_dates[i][0] + "]").attr('class', 'btn btn-success btn-lg day_button');
+					  		}
+					  		else if(data.return_dates[i][1] > intervals[1] && data.return_dates[i][1] < intervals[2]){
+								$("button[name=" + data.return_dates[i][0] + "]").attr('class', 'btn btn-warning btn-lg day_button');
+					  		}
+					  		else if(data.return_dates[i][1] > intervals[2] && data.return_dates[i][1] < intervals[3]){
+					  			$("button[name=" + data.return_dates[i][0] + "]").attr('class', 'btn btn-orange btn-lg day_button');
+					  		}
+					  		else{
+					  			$("button[name=" + data.return_dates[i][0] + "]").attr('class', 'btn btn-red btn-lg day_button');
+					  		}
+					  		
+					  		$("button[name=" + data.return_dates[i][0] + "]").attr('onclick', 'selectReturn(this.name,' + data.return_dates[i][1] + ')');
+					  		$("button[name=" + data.return_dates[i][0] + "]").attr('data-toggle',"popover").attr('title',"$"+data.return_dates[i][1]);
+					  		//$("button[name=" + data.return_dates[i][0] + "]").attr('data-toggle',"modal").attr("data-target","#myModal");
+						}
+						$("button[name=" + name + "]").attr('class', 'btn btn-info btn-lg day_button');
+					}
+				});
+			}
+
+		function selectReturn(name, price)
+			{
+				$("h2[name=return_header]").text(name);
+				$( ".day_button" ).attr('onclick',"").attr('class',"disabled_day_button btn btn-default btn-lg disabled").attr('data-toggle','').attr('title',''); 
+				$("button[name=book_flights]").css('display', 'block');
+				rt_price = price; 
+				$.ajax({
+				    type : 'GET',
+				    url : "/selectReturn?date="+name,
+				    contentType: 'application/json;charset=UTF-8',
+				    success: function (data){
+
+						for(i=0;i<data.middle_dates.length;i++){
+							$("button[name=" + data.middle_dates[i] + "]").attr('class', 'btn btn-teal btn-lg day_button');
+						}
+						$("button[name=" + name + "]").attr('class', 'btn btn-info btn-lg day_button')
+						$("button[name=" + data.departure_date + "]").attr('class', 'btn btn-info btn-lg day_button')
+
+					}
+				});
+			}
+
+		function bookFlights(){
+			$('#myModal').modal('show');
+			if(rt_price > intervals[0] && rt_price < intervals[1]){
+				$('h4[name=modal_price]').css('color','green');
+			}
+			else if(rt_price > intervals[1] && rt_price < intervals[3]){
+				$('h4[name=modal_price]').css('color','#ff8c00');
+			}
+			else{
+				$('h4[name=modal_price]').css('color','red');
+			}
+			$('h4[name=modal_price]').text("$"+rt_price);
+		}
+
+		function clearCalendar(){
+			$("button[name=book_flights]").css('display', 'none');
+			$("h2[name=departure_header]").html("<img src='/static/images/airplane.png' style='height:.7em;padding-right:.3em'>Departure");
+			$("h2[name=return_header]").html("<img src='/static/images/airplane.png' style='height:.7em;padding-right:.3em'>Return");
+			$( ".day_button" ).each(function( index ) {
+				var old_class = $( this ).attr('value')
+				  $( this ).attr('class', old_class);
+				});
+			$( ".disabled_day_button" ).each(function( index ) {
+				var old_class = $( this ).attr('value')
+				  $( this ).attr('class', old_class);
+				});
+			$( ".day_button" ).each(function( index ) {
+				  $( this ).attr('onclick', 'selectDeparture(this.name)');
+				  $( this ).attr('data-toggle',"").attr('title','');
+				});
+			$( ".disabled_day_button" ).each(function( index ) {
+				  $( this ).attr('onclick', '');
+				  $( this ).attr('data-toggle',"").attr('title','');
+				});
+		}
+	</script>
+
+
+	<body style="overflow-y: hidden;>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <img src="/static/images/hopper.png" 	alt="Cinque Terre" width="45" height="45" style="vertical-align:bottom">
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <form class="navbar-form navbar-left">
+      <!--
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search Users">
+        </div>
+		
+        <button type="submit" class="btn btn-default">Submit</button>
+      -->
+      </form>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+		<section id="main" class="container">
+			<header>
+				
+				<h2 style="margin-bottom: 10px;" align="center">Boston to Cancun</h2>
+				<button name="book_flights" type="button" class="btn btn-primary btn-lg" style="width:15em; margin:0 auto; display:none;" onclick="bookFlights()">See Flight!</button>
+
+			</header>
+
+			<div id="wrapper">
+				<h2 name="departure_header" style="float:left; margin-bottom: 10px; display:inline-block;"><img src="/static/images/airplane.png" style="height:.7em;padding-right: .3em">Departure</h2>
+
+				<h2 name="return_header" style="float:right; margin-bottom: 10px; display:inline-block;"><img src="/static/images/airplane.png" style="height:.7em; padding-right: .3em">Return</h2>
+			</div>
+
+			<div></div>
+
+			<div style="background: #D8D8D8;">
+				  <div class="btn-group-justified" align="center">
+				    <button type="button" class="btn btn-success btn-lg" style="width:25%">${{ intervals[0] }}+</button>
+				    <button type="button" class="btn btn-warning btn-lg" style="width:25%">${{ intervals[1] }}+</button>
+				    <button type="button" class="btn btn-orange btn-lg" style="width:25%">${{ intervals[2] }}+</button>
+				    <button type="button" class="btn btn-red btn-lg" style="width:25%">${{ intervals[3] }}+</button>
+				  </div>
+				  <table style="width:100%; margin:0; table-layout: fixed">
+				    <tr style="background: #D8D8D8; margin-bottom: 5px">
+					    <th class="weekdays">S</th>
+					    <th class="weekdays">M</th> 
+					    <th class="weekdays">T</th>
+					    <th class="weekdays">W</th>
+					    <th class="weekdays">T</th> 
+					    <th class="weekdays">F</th>
+					    <th class="weekdays">S</th>
+				  	</tr>
+				  </table>
+				  </div>
+			<div class="container">
+				<div id="myModal" class="modal fade" role="dialog" style="color:#000000;">
+				  <div class="modal-dialog">
+
+				    <!-- Modal content-->
+				    <div class="modal-content" style="background: #D8D8D8;">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        <h3 class="modal-title" style="color:#000000;">Boston to Cancun - Roundtrip</h3>
+				      </div>
+				      <div style="color:#000000" class="modal-body">
+				      	<div id="modal_wrapper">
+							<h4 class="flight_data">Airline:</h4>
+							<h4 class="flight_data_bold" >American Airlines</h4>
+						</div>
+						<div id="modal_wrapper">
+							<h4 class="flight_data">Current Lowest Price:</h4>
+							<h4 class="flight_data_bold" name="modal_price"></h4>
+						</div>
+						<div id="modal_wrapper">
+							<h4 class="flight_data">Refundable:</h4>
+							<h4 class="flight_data_bold" name="modal_rt">No</h4>
+						</div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default btn-lg" onclick="alert('Added to WatchList')">Watch Flight</button>
+				        <button type="button" class="btn btn-primary btn-lg" onclick="alert('Flight Booked!')">Book</button>
+
+				      </div>
+				    </div>
+
+				  </div>
+				</div>
+			</div>
+
+			<div style="overflow-y: scroll; overflow-x: hidden; height:600px; -webkit-overflow-scrolling: touch;"">
+				  {% for m in calendar %}
+				  	<table style="width:100%; table-layout: fixed">
+				  		<tr margin-bottom: 5px">
+				  		{% for d in m[0] %}
+						    <th class="month">{{ d }}</th>
+						{% endfor %}
+					  	</tr>
+					{% for w in m[1:] %}
+					  	<tr class="days" style="margin-bottom: 5px">
+					  	{% for d in w %}
+						    	<td class="weekdays">
+						    	{% if d != "BLANK" %}
+						    		{% if d[2] == "" %}
+						    			<button value = "disabled_day_button btn btn-default btn-lg disabled" name="{{ d[0] }}" type="button" class="disabled_day_button btn btn-default btn-lg disabled">{{ d[1] }}</button>
+						    		{% else %}
+						    			{% if d[2] > intervals[0] and d[2] < intervals[1] %}
+						    				<button value = "btn btn-success btn-lg day_button" name="{{ d[0] }}" type="button" class="btn btn-success btn-lg day_button" onclick="selectDeparture(this.name)">{{ d[1] }}</button>
+						    			{% elif d[2] > intervals[1] and d[2] < intervals[2] %}
+						    				<button value = "btn btn-warning btn-lg day_button" name="{{ d[0] }}" type="button" class="btn btn-warning btn-lg day_button" onclick="selectDeparture(this.name)">{{ d[1] }}</button>
+						    			{% elif d[2] > intervals[2] and d[2] < intervals[3] %}
+						    				<button value = "btn btn-orange btn-lg day_button" name="{{ d[0] }}" type="button" class="btn btn-orange btn-lg day_button" onclick="selectDeparture(this.name)">{{ d[1] }}</button>
+						    			{% else %}
+						    				<button value = "btn btn-red btn-lg day_button" name="{{ d[0] }}" type="button" class="btn btn-red btn-lg day_button"  onclick="selectDeparture(this.name)">{{ d[1] }}</button>
+						    			{% endif %}
+						    		{% endif %}
+						    	{% endif %}
+						    	</td>
+					  	
+						{% endfor %}
+					  	</tr>
+					{% endfor %}
+					</table>
+				  {% endfor %}
+
+
+			</div>
+
+
+
+			{% with messages = get_flashed_messages(with_categories=true) %}
+			  <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+			  {% if messages %}
+			    {% for category, message in messages %}
+			      <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+			      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			      <!-- <strong>Title</strong> --> {{ message }}
+			      </div>	
+			    {% endfor %}
+			  {% endif %}
+			{% endwith %}
+
+		
+
+		<!-- Scripts -->
+
+
+	</body>
+</html>
+
+{% endblock %}
