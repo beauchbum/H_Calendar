@@ -162,7 +162,7 @@ def index():
 
 
 ### Route to handle selecting a departure
-### Sets the global "departue_date" for use later
+### Sets the global "departure_date" for use later
 ### Finds all possible return dates with the "dates_dict"
 @app.route("/selectDeparture", methods=["GET"])
 def selectDeparture():

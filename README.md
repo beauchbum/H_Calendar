@@ -1,11 +1,13 @@
 
 # Hopper Homework Assignment - Methods and Assumptions
 
-## Prompt
+## Prompt and Structure
 
 Use the attached data to create summary pricing stats for departure 
 and return dates, and then create a working prototype of a basic calendar that displays the 
 cheapest departure dates and updates to reflect the cheapest return dates. 
+
+Created a Python Googe App Engine project. Files of most interest are **"main.py"** and **"templates/index.html"**.
 
 ## Process and Timeline
 
