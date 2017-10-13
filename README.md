@@ -76,6 +76,10 @@ I did not take into consideration the received_ms even though in production this
 
 Thankfully I had a template from another web-app project that designed for both desktop and mobile. However, there is something that cuts off Sept 2017 - I think it has to do with the "-webkit-overflow-scrolling: touch;" style, but I could not figure it out. 
 
+#### Old Data
+
+It is unlikely that data requested weeks before would still be valid in terms of available flights. For example, if it is Oct. 12 and I am looking to depart on Oct. 17, then data received at Hopper on Oct. 1 would probably not be relevant. In a production-solution, the displayed data would have to be current, but for this prototype I was unsure where to set that boundary (less than a day/week/month old) so I used all previous data. 
+
 #### Booking Flights
 
 I added a popup box to display the price of the flight. Ideally, this would have other features included in Hopper such as the selling airline, the # of stops, checked bags cost, and the prediction of future flight price. However, I chose not to include any of this as the data was either unavailable or I thought it would add too much complexity given time constraints. 
